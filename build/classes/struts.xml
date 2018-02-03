@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="demo1" extends="struts-default" namespace="/actions">
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="signOut" type="dispatcher">/end/login/login.jsp</result>
+		</action>
+		<action name="project_*" class="projectAction" method="{1}"></action>
+		<action name="point_*" class="pointAction" method="{1}"></action>
+		<action name="worksiteRecord_*" class="worksiteRecordAction" method="{1}"></action>
+		<action name="proRole_*" class="proRoleAction" method="{1}"></action>
+		<action name="userPro_*" class="userProAction" method="{1}"></action>
+		<action name="pointProblem_*" class="pointProblemAction" method="{1}"></action>
+		<action name="pointAnswer_*" class="pointAnswerAction" method="{1}"></action>
+		<action name="document_*" class="documentAction" method="{1}"></action>
+		<action name="specification_*" class="specificationAction" method="{1}"></action>
+		<action name="sign_*" class="signAction" method="{1}"></action>
+		<action name="notice_*" class="noticeAction" method="{1}"></action>
+		<action name="noticeRole_*" class="noticeRoleAction" method="{1}"></action>
+		<action name="log_*" class="logAction" method="{1}"></action>
+		<action name="proRoleAuth_*" class="proRoleAuthAction" method="{1}"></action>
+		<action name="adminPublic_*" class="adminPublicAction" method="{1}"></action>
+		<action name="learnDoc_*" class="learnDocAction" method="{1}"></action>
+	</package>
+	
+	<constant name="struts.custom.i18n.resources" value="Mess"></constant>
+	<constant name="struts.multipart.maxSize" value="104857600"></constant>
+</struts>
+
