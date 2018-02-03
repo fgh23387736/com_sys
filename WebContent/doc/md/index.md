@@ -29,6 +29,10 @@
 
 ##### 1. [项目](project.html)
 ##### 2. [用户](user.html)
+##### 3. [设备](device.html)
+##### 4. [报警表](alarmRecord.html)
+##### 5. [报告表](reportRecord.html)
 
 #专用接口
-##### 1. [刷新签到码（获取接口在项目通用接口中）](special.html#changeSignCode)
+##### 1. [登陆](special.html#login)
+##### 2. [下载数据库文件](special.html#getDb)

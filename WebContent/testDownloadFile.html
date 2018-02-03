@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="/com_sys/assets/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	/* $.ajax({
+        url: '/com_sys/actions/special_getDb.action',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+        	
+
+        },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(data) {
+            
+        }
+    }); */
+    var req = new XMLHttpRequest();
+    req.open('GET', "/com_sys/actions/special_getDb.action", false);
+    //XHR binary charset opt by Marcus Granado 2006 [http://mgran.blogspot.com]
+    req.overrideMimeType('text\/plain; charset=x-user-defined');
+    req.send(null);
+    console.log(req.status);
+    console.log(req);
+    console.log(req.getResponseHeader('Content-Disposition'));
+</script>
+</html>

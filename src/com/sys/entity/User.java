@@ -22,7 +22,7 @@ public class User {
 	private String userName;
 	
 	@Column(name="TYPE")
-	private Integer type;
+	private Character type;
 	
 	@Column(name="PASSWORD")
 	private String password;
@@ -47,11 +47,11 @@ public class User {
 		this.userName = userName;
 	}
 
-	public Integer getType() {
+	public Character getType() {
 		return type;
 	}
 
-	public void setType(Integer type) {
+	public void setType(Character type) {
 		this.type = type;
 	}
 

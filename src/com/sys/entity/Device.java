@@ -28,7 +28,7 @@ public class Device {
 	private String name;
 	
 	@Column(name="PIPEDIAMETER")
-	private Double pipediameter;
+	private Double pipeDiameter;
 	
 	@Column(name="DEVICEADDRESS")
 	private String address;
@@ -64,11 +64,11 @@ public class Device {
 	}
 
 	public Double getPipediameter() {
-		return pipediameter;
+		return pipeDiameter;
 	}
 
-	public void setPipediameter(Double pipediameter) {
-		this.pipediameter = pipediameter;
+	public void setPipediameter(Double pipeDiameter) {
+		this.pipeDiameter = pipeDiameter;
 	}
 
 	public String getAddress() {
