@@ -93,7 +93,8 @@
 				404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。
 				406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。
 				500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。
-	- <a name="reportRecord_search">查</a>  
+	- <a name="reportRecord_search">查</a> 
+	 
 			#根据Id搜索
 			POST /com_sys/actions/reportRecord_getByIds.action
 			to:{
@@ -102,7 +103,8 @@
 				pageSize：10，#每页数据条数（可选，Page和PageSize必须同时存在）
 				ids:'1+2+3+...',#搜索记录Id
 			}
-
+			
+			#根据项目和名称
 			POST /com_sys/actions/reportRecord_getByProjectAndName.action
 			to:{
 				keys:'Id+Title+Price...',#需要获取的属性名，每个属性之间用'+'隔开

@@ -22,7 +22,6 @@
 	- <a name="project_delete">删</a>
 
 			POST /com_sys/actions/project_deleteByIds.action
-			#只有高级别管理员有权限进行本操作，若不是高级别管理员中断程序并返回401
 			to:{
 				ids："id1+id2+id3+..." #要删除的id
 			}
@@ -47,7 +46,6 @@
 	- <a name="project_change">改</a>
 
 			POST /com_sys/actions/project_updateByIds.action
-			#只有管理员自身有权限进行本操作，若当前用户无权限中断程序并返回401
 			to:{
 				ids:'1+',#修改Id
 				keys:'key1+key2+...'

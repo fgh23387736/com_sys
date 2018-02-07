@@ -1,7 +1,6 @@
 - <a name="login">登陆</a>
 
 		POST /com_sys/actions/user_login.action
-		#只有管理员有权限操作
 		to{
 			userName(String):#用户名，
 			password(String):#密码MD5一级加密
