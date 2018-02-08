@@ -18,7 +18,7 @@ public class AlarmRecord {
 	@Id
 	@Column(name="ALARMID")
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	private Integer alarmId;
+	private Integer alarmRecordId;
 	
 	@Column(name="RECORDDATE")
 	private Date date;
@@ -33,12 +33,13 @@ public class AlarmRecord {
 	@JoinColumn(name="DEVICEID")
 	private Device device;
 
-	public Integer getAlarmId() {
-		return alarmId;
+	
+	public Integer getAlarmRecordId() {
+		return alarmRecordId;
 	}
 
-	public void setAlarmId(Integer alarmId) {
-		this.alarmId = alarmId;
+	public void setAlarmRecordId(Integer alarmRecordId) {
+		this.alarmRecordId = alarmRecordId;
 	}
 
 	public Date getDate() {
