@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sys.bean.ResponseBean;
-import com.sys.entity.Project;
+import com.sys.entity.Device;
 import com.sys.entity.User;
-import com.sys.service.ProjectService;
+import com.sys.service.DeviceService;
 import com.sys.util.PublicUtils;
 
-@Component(value="projectAction")
+@Component(value="deviceAction")
 @Scope(value="prototype")
-public class ProjectAction extends ActionSupport implements ModelDriven<Project>{
+public class DeviceAction extends ActionSupport implements ModelDriven<Device>{
 	
 	@Autowired
-	private ProjectService projectService;
+	private DeviceService deviceService;
 	
 	private String ids;
 	
@@ -32,7 +32,7 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 	
 	private String keys;
 	
-	private Project project = new Project();
+	private Device device = new Device();
 	
 	
 	public String getKeys() {
@@ -67,12 +67,12 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 		this.pageSize = pageSize;
 	}
 
-	public Project getProject() {
-		return project;
+	public Device getDevice() {
+		return device;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 
 	@Override
@@ -81,20 +81,20 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 		return NONE;
 	}
 
-	public ProjectService getProjectService() {
-		return projectService;
+	public DeviceService getDeviceService() {
+		return deviceService;
 	}
 
-	public void setProjectService(ProjectService projectService) {
-		this.projectService = projectService;
+	public void setDeviceService(DeviceService deviceService) {
+		this.deviceService = deviceService;
 	}
 
 	@Override
-	public Project getModel() {
-		if(project == null){
-			project = new Project();	
+	public Device getModel() {
+		if(device == null){
+			device = new Device();	
 		}
-		return project;
+		return device;
 	}
 	
 	public void getByIds(){
@@ -104,8 +104,8 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权获取本信息");
 		}else{
-			Integer[] idsIntegers = PublicUtils.getIdsByString(ids, "\\+");
-			Map<String, Object> map = projectService.getProjectByIds(keys,page,pageSize,idsIntegers);
+			String[] idsString = PublicUtils.getStringIdsByString(ids, "\\+");
+			Map<String, Object> map = deviceService.getDeviceByIds(keys,page,pageSize,idsString);
 			responseBean.setObjMap(map);
 			try {
 				responseBean.writeTheMap();
@@ -122,12 +122,12 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 		if (loginUser == null) {
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权进行本操作");
-		}else if(loginUser.getType().equals('3')){
+		}else if(!loginUser.getType().equals('1')){
 			responseBean.setStatus(401);
 			responseBean.put("error", "您不具有权限");
 		}else{
-			Integer[] idsIntegers = PublicUtils.getIdsByString(ids, "\\+");
-			Map<String, Object> map = projectService.updateByIds(keys,idsIntegers,project,loginUser);
+			String[] idsString = PublicUtils.getStringIdsByString(ids, "\\+");
+			Map<String, Object> map = deviceService.updateByIds(keys,idsString,device,loginUser);
 			responseBean.setStatus((int)map.get("code"));
 			responseBean.setObjMap((Map<String, Object>)map.get("result"));
 		}
@@ -149,28 +149,29 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 			responseBean.setStatus(401);
 			responseBean.put("error", "您不具有权限");
 		}else{
-			List<Project> projectList = projectService.getProjectByTheName(project.getName());
-			if(projectList != null && projectList.size() > 0){
-				responseBean.put("error", "项目名已存在");
-				responseBean.setStatus(401);
-			}else{
-				projectList = null;
-				projectList = projectService.getProjectByTheAddress(project.getAddress());
-				if(projectList != null && projectList.size() > 0){
-					responseBean.put("error", "项目地址不可重复");
+			Device theDevice = deviceService.getById(device.getDeviceId());
+			if(theDevice == null){
+				List<Device> deviceList = deviceService.getDeviceByTheAddress(device.getAddress());
+				if(deviceList != null && deviceList.size() > 0){
+					responseBean.put("error", "设备地址不可重复");
 					responseBean.setStatus(401);
 				}else{
-					project = projectService.add(project);
-					if(project.getProjectId() != null) {
+					System.out.println(device.getDeviceId());
+					device = deviceService.add(device);
+					if(device.getDeviceId() != null) {
 						responseBean.setStatus(200);
-						responseBean.put("projectId", project.getProjectId());
+						responseBean.put("deviceId", device.getDeviceId());
 					} else {
 						responseBean.put("error", "添加失败，系统错误");
 						responseBean.setStatus(500);
 					}
 				}
-				
+			}else{
+				responseBean.put("error", "设备已存在");
+				responseBean.setStatus(401);
 			}
+			
+			
 		}
 		
 		try {
@@ -191,8 +192,8 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 			responseBean.setStatus(401);
 			responseBean.put("error", "您不具有权限");
 		}else{
-			Integer[] idsIntegers = PublicUtils.getIdsByString(ids, "\\+");
-			Map<String, Object> map = projectService.deleteByIds(idsIntegers,loginUser);
+			String[] idsString = PublicUtils.getStringIdsByString(ids, "\\+");
+			Map<String, Object> map = deviceService.deleteByIds(idsString,loginUser);
 			responseBean.setStatus((int)map.get("code"));
 			responseBean.setObjMap((Map<String, Object>)map.get("result"));
 		}
@@ -204,26 +205,24 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 		}
 	}
 	
-	public void getByName(){
-		if(project.getName() == null){
-			project.setName("");
+	public void getByProjectAndName(){
+		if(device.getName() == null){
+			device.setName("");
 		}
 		ResponseBean responseBean = new ResponseBean();
 		User loginUser = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
 		if (loginUser == null) {
-			responseBean.setStatus(401);
+			responseBean.setStatus(400);
 			responseBean.put("error", "您还未登录，无权获取本信息");
 		}else{
-			Map<String, Object> map = projectService.getByName(keys,page,pageSize,project);
+			Map<String, Object> map = deviceService.getByProjectAndName(keys,page,pageSize,device);
 			responseBean.setObjMap(map);
-			
-		}
-		
-		try {
-			responseBean.writeTheMap();
-		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
+			try {
+				responseBean.writeTheMap();
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 		}
 	}
 	

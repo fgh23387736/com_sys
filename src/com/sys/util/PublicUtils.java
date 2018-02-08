@@ -50,6 +50,17 @@ public class PublicUtils {
 		return theIds;
 	}
 	
+	public static String[] getStringIdsByString(String ids,String regex){
+		if(ids == null || ids.equals("")){
+			return null;
+		}
+		String[] idsArr = ids.split(regex);
+		String[] theIds = new String[idsArr.length];
+		for(int i = 0; i < idsArr.length; i++) {
+			theIds[i] = idsArr[i];
+		}
+		return theIds;
+	}
 	
 	public static Map<String, Object> generateImage(String imgStr, String path) {
 

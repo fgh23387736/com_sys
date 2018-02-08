@@ -14,14 +14,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 @Entity
-@Table(name = "DEVTCE")
+@Table(name = "DEVICE")
 public class Device {
 	@Id
 	@Column(name="DEVICEID")
-    @GeneratedValue(strategy=GenerationType.AUTO) 
+	@GenericGenerator(name = "id",strategy = "assigned")
+	@GeneratedValue(generator = "id") 
 	private String deviceId;
 	
 	@Column(name="DEVICENAME")
@@ -63,11 +66,13 @@ public class Device {
 		this.name = name;
 	}
 
-	public Double getPipediameter() {
+	
+
+	public Double getPipeDiameter() {
 		return pipeDiameter;
 	}
 
-	public void setPipediameter(Double pipeDiameter) {
+	public void setPipeDiameter(Double pipeDiameter) {
 		this.pipeDiameter = pipeDiameter;
 	}
 

@@ -15,6 +15,7 @@
 		</action>
 		<action name="user_*" class="userAction" method="{1}"></action>
 		<action name="project_*" class="projectAction" method="{1}"></action>
+		<action name="device_*" class="deviceAction" method="{1}"></action>
 		
 	</package>	
 	
