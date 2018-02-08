@@ -18,9 +18,9 @@ public class ReportRecord {
 	@Id
 	@Column(name="REPORTID")
     @GeneratedValue(strategy=GenerationType.IDENTITY) 
-	private Integer reportId;
+	private Integer reportRecordId;
 	
-	@Column(name="REPORTDATE")
+	@Column(name="RECORDDATE")
 	private Date date;
 	
 	@Column(name="PRESSURE")
@@ -54,12 +54,14 @@ public class ReportRecord {
 	@JoinColumn(name="DEVICEID")
 	private Device device;
 
-	public Integer getReportId() {
-		return reportId;
+	
+
+	public Integer getReportRecordId() {
+		return reportRecordId;
 	}
 
-	public void setReportId(Integer reportId) {
-		this.reportId = reportId;
+	public void setReportRecordId(Integer reportRecordId) {
+		this.reportRecordId = reportRecordId;
 	}
 
 	public Date getDate() {
