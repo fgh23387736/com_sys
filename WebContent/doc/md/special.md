@@ -5,13 +5,30 @@
 			userName(String):#用户名，
 			password(String):#密码MD5一级加密
 		}
-		#状态码为201时表示增加成功 并返回下列信息
+		#状态码为201时表示登陆成功 并返回下列信息
 		return {
 			userId:#人员Id
 			type:#人员类型
+			projectId:#所属project
 		}
 		#修改失败时（状态码非201）并返回下列信息
 
+		return {
+			error:#出错原因
+		}
+		
+		401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。
+		422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。
+	
+- <a name="signOut">登出</a>
+
+		POST /com_sys/actions/user_signOut.action
+		to{			
+		}
+		#状态码为201时表示登出成功
+		return {
+		}
+		#修改失败时（状态码非201）并返回下列信息
 		return {
 			error:#出错原因
 		}

@@ -90,7 +90,7 @@
 				ids:'1+2+3+...',#搜索记录Id
 			}
 			
-			#根据项目和名称
+			#根据设备
 			POST /com_sys/actions/alarmRecord_getByDevice.action
 			to:{
 				keys:'Id+Title+Price...',#需要获取的属性名，每个属性之间用'+'隔开

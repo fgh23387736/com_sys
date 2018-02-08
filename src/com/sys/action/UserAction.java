@@ -222,6 +222,12 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 					response.setStatus(201);
 					response.put("userId", theuser.getUserId());
 					response.put("type", theuser.getType());
+					if(theuser.getProject() != null){
+						response.put("projectId", theuser.getProject().getProjectId());
+					}else{
+						response.put("projectId", null);
+					}
+					
 					ServletActionContext.getRequest().getSession().setAttribute("user", theuser);
 				}else{
 					response.put("error", "密码错误");
@@ -243,9 +249,24 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		}
 	}
 	
-	public String signOut(){
-		ServletActionContext.getRequest().getSession().setAttribute("user", null);	
-		return NONE;
+	public void signOut(){
+		ResponseBean responseBean = new ResponseBean();
+		User loginUser = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		if (loginUser == null) {
+			responseBean.setStatus(401);
+			responseBean.put("error", "您还未登录，无权进行本操作");
+		}else{
+			ServletActionContext.getRequest().getSession().setAttribute("user", null);
+			responseBean.setStatus(201);
+			responseBean.setObjMap(null);
+			
+		}
+		try {
+			responseBean.writeTheMap();
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 	
 	

@@ -35,4 +35,5 @@
 
 #专用接口
 ##### 1. [登陆](special.html#login)
-##### 2. [下载数据库文件](special.html#getDb)<已完成>
+##### 2. [登出](special.html#signOut)
+##### 3. [下载数据库文件](special.html#getDb)
