@@ -162,7 +162,7 @@ public class ProjectAction extends ActionSupport implements ModelDriven<Project>
 				}else{
 					project = projectService.add(project);
 					if(project.getProjectId() != null) {
-						responseBean.setStatus(200);
+						responseBean.setStatus(201);
 						responseBean.put("projectId", project.getProjectId());
 					} else {
 						responseBean.put("error", "添加失败，系统错误");

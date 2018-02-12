@@ -160,14 +160,22 @@ public class AlarmRecordAction extends ActionSupport implements ModelDriven<Alar
 					responseBean.setStatus(404);
 					responseBean.put("error", "设备不存在");
 				}else{
-					alarmRecord = alarmRecordService.add(alarmRecord);
-					if(alarmRecord.getAlarmRecordId() != null) {
-						responseBean.setStatus(200);
-						responseBean.put("alarmRecordId", alarmRecord.getAlarmRecordId());
-					} else {
-						responseBean.put("error", "添加失败，系统错误");
-						responseBean.setStatus(500);
+					if(!loginUser.getType().equals('1') 
+							&& !(loginUser.getProject() != null 
+								&& loginUser.getProject().getProjectId().equals(alarmRecord.getDevice().getProject().getProjectId()))){
+						responseBean.setStatus(401);
+						responseBean.put("error", "您不具有权限");
+					}else{
+						alarmRecord = alarmRecordService.add(alarmRecord);
+						if(alarmRecord.getAlarmRecordId() != null) {
+							responseBean.setStatus(201);
+							responseBean.put("alarmRecordId", alarmRecord.getAlarmRecordId());
+						} else {
+							responseBean.put("error", "添加失败，系统错误");
+							responseBean.setStatus(500);
+						}
 					}
+					
 				}
 				
 			}

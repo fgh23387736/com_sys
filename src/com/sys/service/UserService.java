@@ -118,7 +118,7 @@ public class UserService {
 			User user, User loginUser) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> theMap = null;
-		map.put("code", 200);
+		map.put("code", 201);
 		for (Integer integer : idsIntegers) {
 			User user3 = userDao.getById(integer);
 			user3 = getNewUserByKeys(user3,user,keys);

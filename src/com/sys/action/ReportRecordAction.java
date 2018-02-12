@@ -159,14 +159,22 @@ public class ReportRecordAction extends ActionSupport implements ModelDriven<Rep
 					responseBean.setStatus(404);
 					responseBean.put("error", "设备不存在");
 				}else{
-					reportRecord = reportRecordService.add(reportRecord);
-					if(reportRecord.getReportRecordId() != null) {
-						responseBean.setStatus(200);
-						responseBean.put("reportRecordId", reportRecord.getReportRecordId());
-					} else {
-						responseBean.put("error", "添加失败，系统错误");
-						responseBean.setStatus(500);
+					if(!loginUser.getType().equals('1') 
+							&& !(loginUser.getProject() != null 
+								&& loginUser.getProject().getProjectId().equals(reportRecord.getDevice().getProject().getProjectId()))){
+						responseBean.setStatus(401);
+						responseBean.put("error", "您不具有权限");
+					}else{
+						reportRecord = reportRecordService.add(reportRecord);
+						if(reportRecord.getReportRecordId() != null) {
+							responseBean.setStatus(201);
+							responseBean.put("reportRecordId", reportRecord.getReportRecordId());
+						} else {
+							responseBean.put("error", "添加失败，系统错误");
+							responseBean.setStatus(500);
+						}
 					}
+					
 				}
 				
 			}

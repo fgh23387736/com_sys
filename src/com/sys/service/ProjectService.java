@@ -115,7 +115,7 @@ public class ProjectService {
 			Project project, User loginUser) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> theMap = null;
-		map.put("code", 200);
+		map.put("code", 201);
 		String[] keysArrStrings = keys.split("\\+");
 		if(keys.equals("") || keysArrStrings == null || keysArrStrings.length == 0){
 			return map;

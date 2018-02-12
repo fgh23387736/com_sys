@@ -116,34 +116,37 @@ public class AlarmRecordService {
 			AlarmRecord alarmRecord, User loginUser) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> theMap = null;
-		map.put("code", 200);
+		map.put("code", 201);
 		String[] keysArrStrings = keys.split("\\+");
 		if(keys.equals("") || keysArrStrings == null || keysArrStrings.length == 0){
 			return map;
 		}
 		
 		for (Integer integer : idsIntegers) {
-			if(!loginUser.getType().equals('1')){
+			AlarmRecord alarmRecord3 = alarmRecordDao.getById(integer);
+			alarmRecord3 = getNewAlarmRecordByKeys(alarmRecord3,alarmRecord,keysArrStrings);
+			if(alarmRecord3 != null){
+				if(!loginUser.getType().equals('1') 
+						&& !(loginUser.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(alarmRecord3.getDevice().getProject().getProjectId()))){
+					map.put("code", 401);
+					if(theMap == null){
+						theMap = new HashMap<String, Object>();
+						theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					}else{
+						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
+					}
+				}else{
+					alarmRecordDao.update(alarmRecord3);
+				}
+				
+			}else{
 				map.put("code", 400);
 				if(theMap == null){
 					theMap = new HashMap<String, Object>();
-					theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					theMap.put("error", "id为"+integer+"的数据修改失败;");
 				}else{
-					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
-				}
-			}else{
-				AlarmRecord alarmRecord3 = alarmRecordDao.getById(integer);
-				alarmRecord3 = getNewAlarmRecordByKeys(alarmRecord3,alarmRecord,keysArrStrings);
-				if(alarmRecord3 != null){
-					alarmRecordDao.update(alarmRecord3);
-				}else{
-					map.put("code", 400);
-					if(theMap == null){
-						theMap = new HashMap<String, Object>();
-						theMap.put("error", "id为"+integer+"的数据修改失败;");
-					}else{
-						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
-					}
+					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
 				}
 			}
 			
@@ -160,9 +163,9 @@ public class AlarmRecordService {
 		for (Integer integer : idsIntegers) {
 			AlarmRecord alarmRecord2 = alarmRecordDao.getById(integer);
 			if(alarmRecord2 != null){
-				if(loginUser.getType().equals('1')){
-					alarmRecordDao.delete(alarmRecord2);
-				}else{
+				if(!loginUser.getType().equals('1') 
+						&& !(loginUser.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(alarmRecord2.getDevice().getProject().getProjectId()))){
 					map.put("code", 401);
 					if(theMap == null){
 						theMap = new HashMap<String, Object>();
@@ -170,6 +173,8 @@ public class AlarmRecordService {
 					}else{
 						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据删除失败:您不具有权限;");
 					}
+				}else{
+					alarmRecordDao.delete(alarmRecord2);
 				}
 			}else{
 				map.put("code", 404);

@@ -127,37 +127,48 @@ public class DeviceService {
 			Device device, User loginUser) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> theMap = null;
-		map.put("code", 200);
+		map.put("code", 201);
 		String[] keysArrStrings = keys.split("\\+");
 		if(keys.equals("") || keysArrStrings == null || keysArrStrings.length == 0){
 			return map;
 		}
 		
 		for (String integer : ids) {
-			if(!loginUser.getType().equals('1') && !loginUser.getProject().getProjectId().equals(integer)){
+			Device device3 = deviceDao.getById(integer);
+			device3 = getNewDeviceByKeys(device3,device,keysArrStrings);
+			if(device3 != null){
+				boolean isHaveAuth = false;
+				if(loginUser.getType().equals('1')){
+					isHaveAuth = true;
+				}else{
+					if(loginUser.getType().equals('2') 
+							&& loginUser.getProject() != null 
+							&& device3.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(device3.getProject().getProjectId())){
+						isHaveAuth = true;
+					}
+				}
+				if(isHaveAuth){
+					deviceDao.update(device3);
+				}else{
+					map.put("code", 401);
+					if(theMap == null){
+						theMap = new HashMap<String, Object>();
+						theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					}else{
+						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
+					}
+				}	
+				
+			}else{
 				map.put("code", 400);
 				if(theMap == null){
 					theMap = new HashMap<String, Object>();
-					theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					theMap.put("error", "id为"+integer+"的数据修改失败;");
 				}else{
-					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
-				}
-			}else{
-				Device device3 = deviceDao.getById(integer);
-				device3 = getNewDeviceByKeys(device3,device,keysArrStrings);
-				if(device3 != null){
-					deviceDao.update(device3);
-				}else{
-					map.put("code", 400);
-					if(theMap == null){
-						theMap = new HashMap<String, Object>();
-						theMap.put("error", "id为"+integer+"的数据修改失败;");
-					}else{
-						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
-					}
+					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
 				}
 			}
-			
 		}
 		
 		map.put("result", theMap);
@@ -171,7 +182,19 @@ public class DeviceService {
 		for (String integer : idsIntegers) {
 			Device device2 = deviceDao.getById(integer);
 			if(device2 != null){
+				
+				boolean isHaveAuth = false;
 				if(loginUser.getType().equals('1')){
+					isHaveAuth = true;
+				}else{
+					if(loginUser.getType().equals('2') 
+							&& loginUser.getProject() != null 
+							&& device2.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(device2.getProject().getProjectId())){
+						isHaveAuth = true;
+					}
+				}
+				if(isHaveAuth){
 					deviceDao.delete(device2);
 				}else{
 					map.put("code", 401);
@@ -181,7 +204,7 @@ public class DeviceService {
 					}else{
 						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据删除失败:您不具有权限;");
 					}
-				}
+				}	
 			}else{
 				map.put("code", 404);
 				if(theMap == null){

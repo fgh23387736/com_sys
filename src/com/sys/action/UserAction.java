@@ -213,7 +213,6 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 	
 	public void login(){
 		ResponseBean response =new ResponseBean();
-		System.out.println(user.getUserName());
 		List<User> userList = userService.getUserByUserName(user.getUserName());
 		if(userList != null && userList.size() > 0){
 			User theuser = userList.get(0);

@@ -145,33 +145,43 @@ public class DeviceAction extends ActionSupport implements ModelDriven<Device>{
 		if (loginUser == null) {
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权进行本操作");
-		}else if(!loginUser.getType().equals('1')){
-			responseBean.setStatus(401);
-			responseBean.put("error", "您不具有权限");
 		}else{
-			Device theDevice = deviceService.getById(device.getDeviceId());
-			if(theDevice == null){
-				List<Device> deviceList = deviceService.getDeviceByTheAddress(device.getAddress());
-				if(deviceList != null && deviceList.size() > 0){
-					responseBean.put("error", "设备地址不可重复");
-					responseBean.setStatus(401);
-				}else{
-					System.out.println(device.getDeviceId());
-					device = deviceService.add(device);
-					if(device.getDeviceId() != null) {
-						responseBean.setStatus(200);
-						responseBean.put("deviceId", device.getDeviceId());
-					} else {
-						responseBean.put("error", "添加失败，系统错误");
-						responseBean.setStatus(500);
+			boolean isHaveAuth = false;
+			if(loginUser.getType().equals('1')){
+				isHaveAuth = true;
+			}else{
+				if(loginUser.getType().equals('2') 
+						&& loginUser.getProject() != null 
+						&& device.getProject() != null 
+						&& loginUser.getProject().getProjectId().equals(device.getProject().getProjectId())){
+					isHaveAuth = true;
+				}
+			}
+			if(isHaveAuth){
+				Device theDevice = deviceService.getById(device.getDeviceId());
+				if(theDevice == null){
+					List<Device> deviceList = deviceService.getDeviceByTheAddress(device.getAddress());
+					if(deviceList != null && deviceList.size() > 0){
+						responseBean.put("error", "设备地址不可重复");
+						responseBean.setStatus(401);
+					}else{
+						device = deviceService.add(device);
+						if(device.getDeviceId() != null) {
+							responseBean.setStatus(201);
+							responseBean.put("deviceId", device.getDeviceId());
+						} else {
+							responseBean.put("error", "添加失败，系统错误");
+							responseBean.setStatus(500);
+						}
 					}
+				}else{
+					responseBean.put("error", "设备已存在");
+					responseBean.setStatus(401);
 				}
 			}else{
-				responseBean.put("error", "设备已存在");
 				responseBean.setStatus(401);
-			}
-			
-			
+				responseBean.put("error", "您不具有权限");
+			}	
 		}
 		
 		try {

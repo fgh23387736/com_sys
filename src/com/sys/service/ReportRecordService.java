@@ -137,34 +137,37 @@ public class ReportRecordService {
 			ReportRecord reportRecord, User loginUser) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> theMap = null;
-		map.put("code", 200);
+		map.put("code", 201);
 		String[] keysArrStrings = keys.split("\\+");
 		if(keys.equals("") || keysArrStrings == null || keysArrStrings.length == 0){
 			return map;
 		}
 		
 		for (Integer integer : idsIntegers) {
-			if(!loginUser.getType().equals('1')){
+			ReportRecord reportRecord3 = reportRecordDao.getById(integer);
+			reportRecord3 = getNewReportRecordByKeys(reportRecord3,reportRecord,keysArrStrings);
+			if(reportRecord3 != null){
+				if(!loginUser.getType().equals('1') 
+						&& !(loginUser.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(reportRecord3.getDevice().getProject().getProjectId()))){
+					map.put("code", 401);
+					if(theMap == null){
+						theMap = new HashMap<String, Object>();
+						theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					}else{
+						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
+					}
+				}else{
+					reportRecordDao.update(reportRecord3);
+				}
+				
+			}else{
 				map.put("code", 400);
 				if(theMap == null){
 					theMap = new HashMap<String, Object>();
-					theMap.put("error", "id为"+integer+"的数据修改失败:您不具有权限;");
+					theMap.put("error", "id为"+integer+"的数据修改失败;");
 				}else{
-					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败:您不具有权限;");
-				}
-			}else{
-				ReportRecord reportRecord3 = reportRecordDao.getById(integer);
-				reportRecord3 = getNewReportRecordByKeys(reportRecord3,reportRecord,keysArrStrings);
-				if(reportRecord3 != null){
-					reportRecordDao.update(reportRecord3);
-				}else{
-					map.put("code", 400);
-					if(theMap == null){
-						theMap = new HashMap<String, Object>();
-						theMap.put("error", "id为"+integer+"的数据修改失败;");
-					}else{
-						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
-					}
+					theMap.put("error",theMap.get("error")+"id为"+integer+"的数据修改失败;");
 				}
 			}
 			
@@ -181,9 +184,9 @@ public class ReportRecordService {
 		for (Integer integer : idsIntegers) {
 			ReportRecord reportRecord2 = reportRecordDao.getById(integer);
 			if(reportRecord2 != null){
-				if(loginUser.getType().equals('1')){
-					reportRecordDao.delete(reportRecord2);
-				}else{
+				if(!loginUser.getType().equals('1') 
+						&& !(loginUser.getProject() != null 
+							&& loginUser.getProject().getProjectId().equals(reportRecord2.getDevice().getProject().getProjectId()))){
 					map.put("code", 401);
 					if(theMap == null){
 						theMap = new HashMap<String, Object>();
@@ -191,6 +194,8 @@ public class ReportRecordService {
 					}else{
 						theMap.put("error",theMap.get("error")+"id为"+integer+"的数据删除失败:您不具有权限;");
 					}
+				}else{
+					reportRecordDao.delete(reportRecord2);
 				}
 			}else{
 				map.put("code", 404);
