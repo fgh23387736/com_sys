@@ -30,7 +30,7 @@ public class AlarmViewId implements java.io.Serializable{
 	private String temperatureAlarm;
 	
 	@Column(name = "DEVICETROUBLE")
-	private String deviceTtouble;
+	private String deviceTrouble;
 	
 	/** default constructor */  
     public AlarmViewId() {  
@@ -41,7 +41,7 @@ public class AlarmViewId implements java.io.Serializable{
 	public AlarmViewId(String deviceId, Integer deviceNumber,
 			String deviceAddress, String deviceName, Double pipeDiameter,
 			Date recordDate, String temperatureAlarm,
-			String deviceTtouble) {
+			String deviceTrouble) {
 		super();
 		this.deviceId = deviceId;
 		this.deviceNumber = deviceNumber;
@@ -50,7 +50,7 @@ public class AlarmViewId implements java.io.Serializable{
 		this.pipeDiameter = pipeDiameter;
 		this.recordDate = recordDate;
 		this.temperatureAlarm = temperatureAlarm;
-		this.deviceTtouble = deviceTtouble;
+		this.deviceTrouble = deviceTrouble;
 	}
 
 
@@ -117,14 +117,14 @@ public class AlarmViewId implements java.io.Serializable{
 
 
 
-	public String getDeviceTtouble() {
-		return deviceTtouble;
+	public String getDeviceTrouble() {
+		return deviceTrouble;
 	}
 
 
 
-	public void setDeviceTtouble(String deviceTtouble) {
-		this.deviceTtouble = deviceTtouble;
+	public void setDeviceTrouble(String deviceTrouble) {
+		this.deviceTrouble = deviceTrouble;
 	}
 
 }
