@@ -33,6 +33,12 @@ public class Device {
 	@Column(name="PIPEDIAMETER")
 	private Double pipeDiameter;
 	
+	@Column(name="K")
+	private Integer k;
+	
+	@Column(name="PIPEDESCRIBE")
+	private String pipeDescribe;
+	
 	@Column(name="DEVICEADDRESS")
 	private String address;
 	
@@ -56,6 +62,22 @@ public class Device {
 
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
+	}
+
+	public Integer getK() {
+		return k;
+	}
+
+	public void setK(Integer k) {
+		this.k = k;
+	}
+
+	public String getPipeDescribe() {
+		return pipeDescribe;
+	}
+
+	public void setPipeDescribe(String pipeDescribe) {
+		this.pipeDescribe = pipeDescribe;
 	}
 
 	public String getName() {

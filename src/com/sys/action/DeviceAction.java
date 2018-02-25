@@ -122,9 +122,6 @@ public class DeviceAction extends ActionSupport implements ModelDriven<Device>{
 		if (loginUser == null) {
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权进行本操作");
-		}else if(!loginUser.getType().equals('1')){
-			responseBean.setStatus(401);
-			responseBean.put("error", "您不具有权限");
 		}else{
 			String[] idsString = PublicUtils.getStringIdsByString(ids, "\\+");
 			Map<String, Object> map = deviceService.updateByIds(keys,idsString,device,loginUser);
@@ -198,9 +195,6 @@ public class DeviceAction extends ActionSupport implements ModelDriven<Device>{
 		if (loginUser == null) {
 			responseBean.setStatus(401);
 			responseBean.put("error", "您还未登录，无权进行本操作");
-		}else if(!loginUser.getType().equals('1')){
-			responseBean.setStatus(401);
-			responseBean.put("error", "您不具有权限");
 		}else{
 			String[] idsString = PublicUtils.getStringIdsByString(ids, "\\+");
 			Map<String, Object> map = deviceService.deleteByIds(idsString,loginUser);

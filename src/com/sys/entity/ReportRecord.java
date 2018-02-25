@@ -38,9 +38,6 @@ public class ReportRecord {
 	@Column(name="TOTALTESTTIME")
 	private Integer totalTestTime;
 	
-	@Column(name="PIPEDESCRIBE")
-	private String pipeDescribe;
-	
 	@Column(name="JUDGE1")
 	private String judge1;
 	
@@ -110,14 +107,6 @@ public class ReportRecord {
 
 	public void setTotalTestTime(Integer totalTestTime) {
 		this.totalTestTime = totalTestTime;
-	}
-
-	public String getPipeDescribe() {
-		return pipeDescribe;
-	}
-
-	public void setPipeDescribe(String pipeDescribe) {
-		this.pipeDescribe = pipeDescribe;
 	}
 
 	public String getJudge1() {

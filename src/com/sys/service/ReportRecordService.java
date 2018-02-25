@@ -89,8 +89,6 @@ public class ReportRecordService {
 			return reportRecord.getTotalFlow();
 		case "totalTestTime":
 			return reportRecord.getTotalTestTime();
-		case "pipeDescribe":
-			return reportRecord.getPipeDescribe();
 		case "judge1":
 			return reportRecord.getJudge1();
 		case "judge2":
@@ -239,9 +237,6 @@ public class ReportRecordService {
 					break;
 				case "totalTestTime":
 					reportRecord.setTotalTestTime(newReportRecord.getTotalTestTime());
-					break;
-				case "pipeDescribe":
-					reportRecord.setPipeDescribe(newReportRecord.getPipeDescribe());
 					break;
 				case "judge1":
 					reportRecord.setJudge1(newReportRecord.getJudge1());

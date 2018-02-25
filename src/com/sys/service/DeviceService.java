@@ -47,6 +47,8 @@ public class DeviceService {
 					"remarks",
 					"pipeDiameter",
 					"number",
+					"pipeDescribe",
+					"k",
 					"project"
 			};
 			keysArrStrings = tempKeys;
@@ -73,6 +75,10 @@ public class DeviceService {
 			return device.getName();
 		case "address":
 			return device.getAddress();
+		case "pipeDescribe":
+			return device.getPipeDescribe();
+		case "k":
+			return device.getK();	
 		case "remarks":
 			return device.getRemarks();
 		case "pipeDiameter":
@@ -241,6 +247,12 @@ public class DeviceService {
 					break;
 				case "project":
 					device.setProject(newDevice.getProject());
+					break;
+				case "pipeDescribe":
+					device.setPipeDescribe(newDevice.getPipeDescribe());
+					break;
+				case "k":
+					device.setK(newDevice.getK());
 					break;
 				case "address":
 					devices = this.getDeviceByTheAddress(newDevice.getAddress());

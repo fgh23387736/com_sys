@@ -18,6 +18,8 @@
 		<action name="device_*" class="deviceAction" method="{1}"></action>
 		<action name="alarmRecord_*" class="alarmRecordAction" method="{1}"></action>
 		<action name="reportRecord_*" class="reportRecordAction" method="{1}"></action>
+		<action name="reportView_*" class="reportViewAction" method="{1}"></action>
+		<action name="alarmView_*" class="alarmViewAction" method="{1}"></action>
 	</package>	
 	
 	<constant name="struts.custom.i18n.resources" value="Mess"></constant>

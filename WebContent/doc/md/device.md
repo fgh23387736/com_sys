@@ -6,9 +6,11 @@
 				deviceId(String):#设备id
 				name(String):#名称，
 				pipeDiameter(Double):#设备管径
+				pipeDescribe(String):#管道描述
 				address(String):#地址，
 				number(Integer):#编号
 				remarks(String):#备注
+				k(Integer):#k系数
 				project(Integer):#所属项目
 			}
 			#状态码为201时表示增加成功 并返回下列信息
@@ -61,9 +63,11 @@
 			keys∈{
 				name(String):#名称，
 				pipeDiameter(Double):#设备管径
+				pipeDescribe(String):#管道描述
 				address(String):#地址，
 				number(Integer):#编号
 				remarks(String):#备注
+				k(Integer):#k系数
 				project(Integer):#所属项目
 			}
 		
@@ -110,7 +114,9 @@
 				deviceId(String):#设备id
 				name(String):#名称，
 				pipeDiameter(Double):#设备管径
+				pipeDescribe(String):#管道描述
 				address(String):#地址，
+				k(Integer):#k系数
 				number(Integer):#编号
 				remarks(String):#备注
 				project(json):{

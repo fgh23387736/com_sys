@@ -9,7 +9,6 @@
 				averageFlow(Double):#平均流量
 				totalFlow(Double):#累计流量
 				totalTestTime(Integer):#测试时间
-				pipeDescribe(String):#管道描述
 				judge1(String):#判定1
 				judge2(String):#判定2
 				remarks(String):#备注，
@@ -69,7 +68,6 @@
 				averageFlow(Double):#平均流量
 				totalFlow(Double):#累计流量
 				totalTestTime(Integer):#测试时间
-				pipeDescribe(String):#管道描述
 				judge1(String):#判定1
 				judge2(String):#判定2
 				remarks(String):#备注，
@@ -122,7 +120,6 @@
 				averageFlow(Double):#平均流量
 				totalFlow(Double):#累计流量
 				totalTestTime(Integer):#测试时间
-				pipeDescribe(String):#管道描述
 				judge1(String):#判定1
 				judge2(String):#判定2
 				remarks(String):#备注，

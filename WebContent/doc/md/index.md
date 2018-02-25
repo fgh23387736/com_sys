@@ -32,6 +32,8 @@
 ##### 3. [设备](device.html)
 ##### 4. [报警表](alarmRecord.html)
 ##### 5. [报告表](reportRecord.html)
+##### 6. [报告视图](reportView.html)
+##### 7. [报警视图](alarmView.html)
 
 #专用接口
 ##### 1. [登陆](special.html#login)

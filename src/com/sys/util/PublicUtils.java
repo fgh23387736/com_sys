@@ -40,7 +40,7 @@ public class PublicUtils {
 	
 	public static Integer[] getIdsByString(String ids,String regex){
 		if(ids == null || ids.equals("")){
-			return null;
+			return new Integer[0];
 		}
 		String[] idsArr = ids.split(regex);
 		Integer[] theIds = new Integer[idsArr.length];
@@ -52,7 +52,7 @@ public class PublicUtils {
 	
 	public static String[] getStringIdsByString(String ids,String regex){
 		if(ids == null || ids.equals("")){
-			return null;
+			return new String[0];
 		}
 		String[] idsArr = ids.split(regex);
 		String[] theIds = new String[idsArr.length];
