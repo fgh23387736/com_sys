@@ -10,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sun.jndi.cosnaming.IiopUrl.Address;
 import com.sys.dao.AlarmViewDao;
 import com.sys.entity.AlarmView;
-import com.sys.entity.Device;
-import com.sys.entity.Project;
-import com.sys.entity.User;
 
 
 @Transactional
